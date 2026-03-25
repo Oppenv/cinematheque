@@ -12,14 +12,14 @@
 </head>
 <body>
 <nav>
-  <div class="logo" onclick="showPage('home')">Cine<em>matheque</em></div>
+  <div class="logo" onclick="showPageDirect('home')" style="cursor:pointer">Cine<em>matheque</em></div>
   <ul class="nav-links">
-    <li><a onclick="showPageDirect('home')" id="nav-home" class="active">Home</a></li>
-    <li><a onclick="showPageDirect('era')" id="nav-era">Era</a></li>
-    <li><a onclick="showPageDirect('genre')" id="nav-genre">Genre</a></li>
-    <li><a onclick="showPageDirect('mood')" id="nav-mood">Mood</a></li>
-    <li><a onclick="showPageDirect('directors')" id="nav-directors">Directors</a></li>
-    <li><a onclick="showPageDirect('actors')" id="nav-actors">Actors</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('era')" id="nav-era">Era</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('genre')" id="nav-genre">Genre</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('mood')" id="nav-mood">Mood</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('directors')" id="nav-directors">Directors</a></li>
+    <li><a href="javascript:void(0)" onclick="showPageDirect('actors')" id="nav-actors">Actors</a></li>
   </ul>
 </nav>
 <div id="page-home" class="page active">
@@ -29,7 +29,7 @@
       <span class="gsearch-icon">&#9654;</span>
       <div class="gsearch-results" id="gsearch-results"></div>
     </div>
-    <div class="hero-eye">Est. 2025 - The World's Film Library &nbsp;|&nbsp; v2.3</div>
+    <div class="hero-eye">Est. 2025 - The World's Film Library &nbsp;|&nbsp; v2.5</div>
     <h1>Every great film.<br><em>Every great story.</em></h1>
     <p class="hero-sub">From the first flicker of light in 1888 to the latest masterwork - the most comprehensive guide to cinema ever assembled.</p>
     <div class="hero-stats">
@@ -328,7 +328,6 @@ function showPage(n) {
 }
 
 function showPageDirect(n) {
-  console.log('showPageDirect called with:', n);
   var ps = document.querySelectorAll('.page');
   for (var i=0; i<ps.length; i++) ps[i].classList.remove('active');
   var ls = document.querySelectorAll('.nav-links a');
@@ -337,7 +336,7 @@ function showPageDirect(n) {
   if (pg) pg.classList.add('active');
   var nv = document.getElementById('nav-'+n);
   if (nv) nv.classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo({top:0,left:0,behavior:"instant"});
   if (n==='era'       && !eraBuilt)  { buildEra();       eraBuilt=true; }
   if (n==='genre'     && !genreBuilt){ buildGenre();     genreBuilt=true; }
   if (n==='mood'      && !moodBuilt) { buildMood();      moodBuilt=true; }
@@ -820,7 +819,6 @@ function filterMoodFilms(id) {
 }
 
 function buildDirectors() {
-  console.log('buildDirectors starting, ALL_DIRECTORS.length:', ALL_DIRECTORS.length);
   var gh = '', ph = '';
   var fullIds = ['hitchcock','wilder','lean','ford','coppola_f','scorsese','kubrick','spielberg'];
   for (var i=0; i<ALL_DIRECTORS.length; i++) {
@@ -1067,7 +1065,6 @@ function bindFilmLinks() {
 ;
 
 function buildActors() {
-  console.log('buildActors starting, ALL_ACTORS.length:', ALL_ACTORS.length);
   var gh = '', ph = '';
   var fullIds = [];
   for (var i = 0; i < ALL_ACTORS.length; i++) {
@@ -1322,8 +1319,6 @@ function closeGlobalSearch() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM ready, ALL_DIRECTORS:', ALL_DIRECTORS ? ALL_DIRECTORS.length : 'MISSING');
-  console.log('DOM ready, ALL_ACTORS:', ALL_ACTORS ? ALL_ACTORS.length : 'MISSING');
   buildHome();
   var gsi = document.getElementById('gsearch');
   if (gsi) {
